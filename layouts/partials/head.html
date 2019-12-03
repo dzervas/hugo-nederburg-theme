@@ -2,11 +2,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 {{ partial "schema" . }}
 
-{{ with .Title }} <title>{{ . }} {{if $.IsHome}}- {{ $.Site.Params.slogan | default "" | safeHTML }}{{ end }}</title>
+{{ with .Title }}
+	<title>{{ . }} {{if $.IsHome}}- {{ $.Site.Params.slogan | default "" | safeHTML }}{{ end }}</title>
 {{ end }}
 
-{{ if .Description }}<meta name="description" content="{{ .Description }}" />
-{{ else }}<meta name="description" content="{{ .Site.Params.description }}" />
+{{ if .Description }}
+	<meta name="description" content="{{ .Description }}" />
+{{ else }}
+	<meta name="description" content="{{ .Site.Params.description }}" />
 {{ end }}
 
 
