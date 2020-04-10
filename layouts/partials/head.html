@@ -12,24 +12,38 @@
 	<meta name="description" content="{{ .Site.Params.description }}" />
 {{ end }}
 
+<link rel="shortcut icon" href="{{ "img/favicon.ico" | absURL }}" type="image/x-icon">
+<link rel="icon" href="{{ "img/favicon.ico" | absURL }}" type="image/x-icon">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
 <!-- Upgraded to Font Awesome 5.3 no need for local files using all.css so all icons are available -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<!-- Theme stylesheet, if possible do not edit this stylesheet -->
-<link href="{{ "css/style.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
-<!-- Custom stylesheet - for your changes -->
-<link href="{{ "css/custom.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" type='text/css' media='all'>
-<link href="{{ "css/hugo-easy-gallery.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" type='text/css' media='all'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
-<link rel="shortcut icon" href="{{ "img/favicon.ico" | absURL }}" type="image/x-icon">
-<link rel="icon" href="{{ "img/favicon.ico" | absURL }}" type="image/x-icon">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
+
+{{ $css := resources.Match "css/*" | resources.Concat "css/bundle.css" | minify | fingerprint }}
+<link href="{{ $css.Permalink }}" rel="stylesheet" type='text/css' media='all'>
+
 {{ if .Site.Params.social.rss }}
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title | default "" }}" />
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title | default "" }}" />
 {{ end }}
+
 {{ template "_internal/google_analytics_async.html" . }}
+
+<!-- JavaScript -->
+<script defer src="https://unpkg.com/jquery/dist/jquery.min.js" crossorigin="anonymous"></script>
+<script defer src="https://unpkg.com/jquery-migrate/dist/jquery-migrate.min.js" crossorigin="anonymous"></script>
+<script defer src="{{ (resources.Get "js/production.min.js").Permalink }}"></script>
+<!--<script defer src="https://unpkg.com/fitvids/index.js"></script>--> <!-- I don't think this is used -->
+
+{{ if $.IsPage }}
+	<link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/photoswipe.css" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/default-skin/default-skin.css" crossorigin="anonymous" />
+	<script defer src="https://unpkg.com/photoswipe/dist/photoswipe.min.js" crossorigin="anonymous"></script>
+	<script defer src="https://unpkg.com/photoswipe/dist/photoswipe-ui-default.min.js" crossorigin="anonymous"></script>
+	{{ $pswp := resources.Get "js/load-photoswipe.js" | minify }}
+	<script defer src="{{ $pswp.Permalink }}"></script>
+{{ end }}
+

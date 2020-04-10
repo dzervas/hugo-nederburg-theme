@@ -1,4 +1,6 @@
-{{ partial "photoswipe.html" . }}
+{{ if $.IsPage }}
+	{{ partial "photoswipe.html" . }}
+{{ end }}
 
 <div id="title-info" class="title-info">
 	<div id='site-title' class='site-title'>
