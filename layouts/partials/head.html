@@ -33,7 +33,7 @@
 {{ template "_internal/google_analytics_async.html" . }}
 
 <!-- JavaScript -->
-<script defer src="https://unpkg.com/jquery/dist/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/jquery/dist/jquery.min.js" crossorigin="anonymous"></script>
 <script defer src="https://unpkg.com/jquery-migrate/dist/jquery-migrate.min.js" crossorigin="anonymous"></script>
 <script defer src="{{ (resources.Get "js/production.min.js").Permalink }}"></script>
 <!--<script defer src="https://unpkg.com/fitvids/index.js"></script>--> <!-- I don't think this is used -->
@@ -41,9 +41,10 @@
 {{ if $.IsPage }}
 	<link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/photoswipe.css" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/default-skin/default-skin.css" crossorigin="anonymous" />
+
+	{{ $pswp := resources.Get "js/load-photoswipe.js" | minify }}
+	<script>{{ $pswp.Content | safeJS }}</script>
 	<script defer src="https://unpkg.com/photoswipe/dist/photoswipe.min.js" crossorigin="anonymous"></script>
 	<script defer src="https://unpkg.com/photoswipe/dist/photoswipe-ui-default.min.js" crossorigin="anonymous"></script>
-	{{ $pswp := resources.Get "js/load-photoswipe.js" | minify }}
-	<script defer src="{{ $pswp.Permalink }}"></script>
 {{ end }}
 

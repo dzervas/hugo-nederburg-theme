@@ -24,4 +24,4 @@
         "image" : {{ printf "%s%s" .Site.BaseURL .Page.Params.image }},
         "keywords" : [ {{ if isset .Params "tags" }}{{ range .Params.tags }}"{{ . }}",{{ end }}{{ end }}"Blog" ]
     }
-    </script>
+</script>
