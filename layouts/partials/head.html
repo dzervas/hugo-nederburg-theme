@@ -20,10 +20,10 @@
 <meta name="googlebot" content="index,follow,snippet,archive">
 <link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
 <!-- Upgraded to Font Awesome 5.3 no need for local files using all.css so all icons are available -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
+<link rel="preload" as="style" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
 
 {{ $css := resources.Match "css/*" | resources.Concat "css/bundle.css" | minify | fingerprint }}
-<link href="{{ $css.Permalink }}" rel="stylesheet" type='text/css' media='all'>
+<style type="text/css" media="all">{{ $css.Content | safeCSS }}</style>
 
 {{ if .Site.Params.social.rss }}
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title | default "" }}" />
@@ -36,7 +36,6 @@
 <script src="https://unpkg.com/jquery/dist/jquery.min.js" crossorigin="anonymous"></script>
 <script defer src="https://unpkg.com/jquery-migrate/dist/jquery-migrate.min.js" crossorigin="anonymous"></script>
 <script defer src="{{ (resources.Get "js/production.min.js").Permalink }}"></script>
-<!--<script defer src="https://unpkg.com/fitvids/index.js"></script>--> <!-- I don't think this is used -->
 
 {{ if $.IsPage }}
 	<link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/photoswipe.css" crossorigin="anonymous" />
